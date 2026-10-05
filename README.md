@@ -70,14 +70,17 @@ flowchart LR
 
 ## 📸 Capturas
 
-<!-- Agrega aquí capturas actuales de la app (landing, motor de examen, resultados).
-     Súbelas a la carpeta assets/ y descomenta las líneas:
-<p align="center">
-  <img src="assets/landing.png" width="32%" />
-  <img src="assets/examen.png" width="32%" />
-  <img src="assets/resultados.png" width="32%" />
-</p>
--->
+**Landing:** simulacros de CENEVAL, UNAM, IPN, UAM y College Board
+
+<img src="assets/landing.png" alt="Landing de SimsUni" width="100%" />
+
+**Panel del estudiante:** estadísticas, racha, créditos y recomendaciones
+
+<img src="assets/dashboard.png" alt="Panel del estudiante" width="100%" />
+
+**Perfil:** meta de universidad y carrera, fecha del examen y plan
+
+<img src="assets/perfil.png" alt="Perfil del estudiante" width="100%" />
 
 👉 La mejor forma de conocerla es probarla: **[simuladorexam.vercel.app](https://simuladorexam.vercel.app)**
 
