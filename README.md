@@ -1,56 +1,95 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=3178C6&center=true&vCenter=true&width=600&lines=Hola%2C+soy+Adolfo+Huerta+%F0%9F%91%8B;Estudiante+de+Ingenier%C3%ADa+en+Ciencias+de+la+Computaci%C3%B3n;Desarrollador+Web+%26+M%C3%B3vil" alt="Typing SVG" />
+<img src="assets/banner.jpg" alt="SimsUni — Tu entrenamiento inteligente para la universidad" width="100%" />
 
-📍 Puebla, México &nbsp;·&nbsp; 🎓 BUAP · FCC &nbsp;·&nbsp; 💼 Galcex
+# SimsUni
+
+**Plataforma de simulacros de exámenes de admisión universitaria en México**
+
+[![Ver app en vivo](https://img.shields.io/badge/🚀_Ver_app_en_vivo-simuladorexam.vercel.app-2563EB?style=for-the-badge)](https://simuladorexam.vercel.app)
+
+![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=flat-square&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![tRPC](https://img.shields.io/badge/tRPC_11-2596BE?style=flat-square&logo=trpc&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma_7-2D3748?style=flat-square&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL_(Neon)-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=flat-square&logo=vitest&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
 
 </div>
+
+> 🔒 **El código fuente es privado.** Este repositorio es la vitrina pública del proyecto: qué hace, cómo está construido y dónde probarlo. Si eres reclutador o colaborador y quieres ver el código, [escríbeme](https://github.com/AdolfoHMtz).
 
 ---
 
-### 🙋‍♂️ Sobre mí
+## 🎯 ¿Qué es?
 
-- 💻 Estudiante de **Ingeniería en Ciencias de la Computación** apasionado por crear aplicaciones web y móviles.
-- 🚀 Actualmente trabajo en un **simulador de exámenes de admisión** para la universidad.
-- 🌱 Aprendiendo más sobre **Angular + Ionic**, **TypeScript** y backend con **Django**.
-- 🤝 Abierto a colaborar en proyectos web y de software educativo.
+SimsUni ayuda a los aspirantes a la universidad a prepararse con **simulacros realistas**, con tiempo, puntaje y formato iguales a los del examen oficial. Tiene una arquitectura **multi-universidad** que cubre:
 
-### 🛠️ Tecnologías
+- **CENEVAL:** EXANI-I y EXANI-II (BUAP, UV, UADY, UAEH y muchas más).
+- **Exámenes institucionales:** UNAM, IPN y UAM.
+- **College Board:** PAA y PIENSE II.
 
-<p>
-  <img src="https://skillicons.dev/icons?i=js,ts,html,css,react,angular,bootstrap,tailwind,vite&perline=9" alt="Frontend" /><br/>
-  <img src="https://skillicons.dev/icons?i=nodejs,express,python,django,mysql,cpp,git,github,netlify&perline=9" alt="Backend y herramientas" />
+## ✨ Funcionalidades
+
+| | |
+|---|---|
+| 📝 **Motor de examen** | Temporizador sincronizado con el servidor, guardado automático, modo completo y modo corto |
+| 📊 **Calificación por fórmula** | Aciertos, escala CENEVAL 700–1300 y College Board 400–1600 |
+| 📈 **Resultados y progreso** | Desglose por sección, revisión de respuestas, historial, rachas y exportación a PDF |
+| 📚 **Modo estudio** | Práctica guiada por tema (Premium) |
+| 🏫 **Catálogo** | Filtrado por universidad, nivel y carrera, con 15 plantillas de examen |
+| 👥 **Roles** | Estudiante, colaborador que redacta preguntas y administrador que modera |
+| 🤖 **Importación con IA** | Extrae preguntas de guías en PDF con la API de Claude |
+| ➗ **Matemáticas** | Fórmulas con KaTeX y barra de símbolos para redactar preguntas |
+| 💳 **Monetización freemium** | Créditos por intento y suscripción Premium con **Stripe** y **Conekta** (OXXO) |
+| 🌗 **Diseño propio** | Sistema de diseño con modo claro y oscuro, responsive para móvil |
+
+## 🏗️ Arquitectura
+
+```mermaid
+flowchart LR
+    U[Estudiante] --> FE[Next.js 14<br/>App Router + Tailwind]
+    FE -->|tRPC| API[API tipada<br/>tRPC + Zod]
+    API --> DB[(PostgreSQL<br/>Neon + Prisma)]
+    API --> AUTH[NextAuth]
+    API --> PAY[Stripe / Conekta<br/>webhooks]
+    API --> IMG[Cloudinary]
+    API --> AI[Claude API<br/>importación de PDF]
+    CRON[Vercel Cron] --> API
+```
+
+- **Stack T3:** Next.js, tRPC, Prisma, NextAuth y Tailwind, con TypeScript de punta a punta.
+- **Pagos idempotentes:** los webhooks validan la firma y aplican el beneficio dentro de una transacción.
+- **Tareas programadas:** un cron diario cierra los intentos expirados.
+- **Pruebas:** 17 suites de Vitest, entre ellas el cálculo de puntaje, las rachas, la autenticación y la validación del banco de preguntas.
+- **Respaldos:** copia automática de la base de datos con GitHub Actions.
+- **Investigación:** fichas de 38 exámenes de admisión 2026, con temarios, convocatorias y oferta de carreras de 14 universidades.
+
+## 📸 Capturas
+
+<!-- Agrega aquí capturas actuales de la app (landing, motor de examen, resultados).
+     Súbelas a la carpeta assets/ y descomenta las líneas:
+<p align="center">
+  <img src="assets/landing.png" width="32%" />
+  <img src="assets/examen.png" width="32%" />
+  <img src="assets/resultados.png" width="32%" />
 </p>
+-->
 
-### 🌟 Proyectos destacados
+👉 La mejor forma de conocerla es probarla: **[simuladorexam.vercel.app](https://simuladorexam.vercel.app)**
 
-| Proyecto | Descripción | Stack | Demo |
-|---|---|---|---|
-| [**Simulador de Sistemas Distribuidos**](https://github.com/AdolfoHMtz/ProjectSO2-simulators) | Simuladores interactivos de elección de líder y sincronización de relojes. | React · TypeScript · Vite | [Ver en vivo](https://proyectoso-eq8-simuladores.netlify.app) |
-| [**PeliculasAPP**](https://github.com/AdolfoHMtz/PeliculasAPP) | App móvil de películas: detalles, categorías y búsqueda consumiendo una API externa. | Angular · Ionic | [Ver en vivo](https://peliculasappahm.netlify.app) |
-| [**Gestión Académica**](https://github.com/AdolfoHMtz/Proyecto-Desarrollo-de-Aplicaciones-Moviles) | Sistema escolar con frontend web y API REST. | Angular · Django | — |
-| [**TareAPP**](https://github.com/AdolfoHMtz/TareAPP) | Gestor de tareas móvil. | Angular · Ionic | [Ver en vivo](https://stately-longma-2938d1.netlify.app) |
-| [**Calculadora Discreta**](https://github.com/AdolfoHMtz/Matematicas-Discretas) | Calculadora de conjuntos y relaciones. | React | [Ver en vivo](https://calculadoradiscreta-adolfohm.netlify.app) |
-| [**Gestión de Memoria**](https://github.com/AdolfoHMtz/Memory-Management-Pagination) | Simulador visual de paginación de memoria. | React · Tailwind | — |
+## 🗺️ Estado
 
-### 📊 Estadísticas
+- ✅ Autenticación, banco de preguntas, motor de examen, pagos, landing y despliegue
+- ✅ Rediseño visual v2 y refactor completos
+- 🔄 Cargando el banco de preguntas y preparando el lanzamiento
 
-<div align="center">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=AdolfoHMtz&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="Estadísticas de GitHub" />
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=AdolfoHMtz&layout=compact&theme=tokyonight&hide_border=true&langs_count=6" alt="Lenguajes más usados" />
-  <br/>
-  <img src="https://streak-stats.demolab.com?user=AdolfoHMtz&theme=tokyonight&hide_border=true" alt="Racha de contribuciones" />
-</div>
+## 👨‍💻 Autor
 
-### 📫 Contacto
+**Adolfo Huerta**: idea, diseño y desarrollo full-stack.
+[@AdolfoHMtz](https://github.com/AdolfoHMtz) · Puebla, México
 
-<p>
-  <a href="https://github.com/AdolfoHMtz"><img src="https://img.shields.io/badge/GitHub-AdolfoHMtz-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-  <!-- Descomenta y pon tu usuario real para mostrar LinkedIn:
-  <a href="https://www.linkedin.com/in/TU-USUARIO"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  -->
-</p>
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=AdolfoHMtz&color=3178C6&style=flat-square&label=Visitas" alt="Visitas al perfil" />
-</div>
+<sub>© 2026 Adolfo Huerta. Todos los derechos reservados.</sub>
